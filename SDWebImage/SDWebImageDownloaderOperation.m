@@ -102,13 +102,23 @@
         }
         else
         {
+          @try {
             CFRunLoopRun();
+          }
+          @catch (NSException *exception) {
+            NSLog(@"Exception with %@", exception);
+          }
         }
 
         if (!self.isFinished)
         {
+          @try {
             [self.connection cancel];
             [self connection:self.connection didFailWithError:[NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:@{NSURLErrorFailingURLErrorKey: self.request.URL}]];
+          }
+          @catch (NSException *exception) {
+            NSLog(@"Exception with %@", exception);
+          }
         }
     }
     else
